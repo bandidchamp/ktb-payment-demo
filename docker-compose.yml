@@ -1,0 +1,47 @@
+version: '3.0'
+
+services:
+
+  postgres:
+    container_name: 'postgres'
+    image: postgres:alpine3.15
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRESS_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRESS_PASSWORD}
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - '${POSTGRESS_PORT}:${POSTGRESS_PORT}'
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      # # copy the sql script to create tables
+      # - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      # # copy the sql script to fill tables
+      # - ./sql/fill_tables.sql:/docker-entrypoint-initdb.d/fill_tables.sql
+      
+  backend-order-mock:
+    build:
+      context: .
+      dockerfile: Dockerfile-order-mock
+    image: order:latest
+    container_name: order-mock
+    volumes:
+      - ./:/app
+    ports:
+      - ${APP_SERVER_ORDER_PORT}:${APP_SERVER_ORDER_PORT}
+    restart: always
+
+  backend-kbank-mock:
+    build:
+      context: .
+      dockerfile: Dockerfile-kbank-mock
+    image: kbank:latest
+    container_name: kbank-mock
+    volumes:
+      - ./:/app
+    ports:
+      - ${APP_SERVER_KBANK_PORT}:${APP_SERVER_KBANK_PORT}
+    restart: always

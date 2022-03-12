@@ -1,0 +1,9 @@
+:: using
+
+CompileDaemon --build="go build ./cmd/main.go" --command=./main.exe
+
+
+CompileDaemon --build="go build ./cmd/main_order_mock.go" --command=./main_order_mock.exe
+
+
+CompileDaemon --build="go build ./cmd/main_kbank_mock.go" --command=./main_kbank_mock.exe
