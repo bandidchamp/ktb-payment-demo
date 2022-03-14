@@ -8,19 +8,20 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/jmoiron/sqlx"
 )
 
 type Server struct {
-	fiber     *fiber.App
-	ktb_fiber *fiber.App
-	config    *configs.Config
+	fiber  *fiber.App
+	db     *sqlx.DB
+	config *configs.Config
 }
 
-func NewServer(config *configs.Config) *Server {
+func NewServer(db *sqlx.DB, config *configs.Config) *Server {
 	return &Server{
-		fiber:     fiber.New(),
-		ktb_fiber: fiber.New(),
-		config:    config,
+		fiber:  fiber.New(),
+		db:     db,
+		config: config,
 	}
 }
 

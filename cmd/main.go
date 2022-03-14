@@ -3,6 +3,8 @@ package main
 import (
 	"ktb-payment/configs"
 	"ktb-payment/internal/server"
+	"ktb-payment/pkg/database/postgresql"
+	"log"
 	"os"
 )
 
@@ -14,7 +16,7 @@ func main() {
 
 	config := &configs.Config{}
 	config.Posrgress.Host = os.Getenv("POSTGRESS_HOST")
-	config.Posrgress.Port = os.Getenv("POSTGRESS_DBNAME")
+	config.Posrgress.Port = os.Getenv("POSTGRESS_PORT")
 	config.Posrgress.Username = os.Getenv("POSTGRESS_USERNAME")
 	config.Posrgress.Password = os.Getenv("POSTGRESS_PASSWORD")
 	config.Posrgress.DBname = os.Getenv("POSTGRESS_DBNAME")
@@ -23,7 +25,14 @@ func main() {
 	config.Fiber.Port = os.Getenv("APP_SERVER_PORT")
 	config.Fiber.Timeout = os.Getenv("APP_SERVER_TIMEOUT")
 
-	Server := server.NewServer(config)
+	// * Define Database
+	db, err := postgresql.NewPostgreSQLDB(config)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	Server := server.NewServer(db, config)
 	serr := Server.StartServer()
 	if serr != nil {
 		panic("Server can't Start.")
