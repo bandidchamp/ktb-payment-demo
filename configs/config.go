@@ -3,9 +3,8 @@ package configs
 import "github.com/joho/godotenv"
 
 type Config struct {
-	Posrgress    Posrgress
-	Fiber        Fiber
-	FiberMockKtb FiberMockKtb
+	Posrgress Posrgress
+	Fiber     Fiber
 }
 
 type Posrgress struct {
@@ -17,12 +16,6 @@ type Posrgress struct {
 }
 
 type Fiber struct {
-	Host    string
-	Port    string
-	Timeout string
-}
-
-type FiberMockKtb struct {
 	Host    string
 	Port    string
 	Timeout string
