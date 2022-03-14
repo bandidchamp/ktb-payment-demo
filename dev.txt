@@ -1,9 +1,7 @@
 :: using
 
+# main app
 CompileDaemon --build="go build ./cmd/main.go" --command=./main.exe
 
-
-CompileDaemon --build="go build ./cmd/main_order_mock.go" --command=./main_order_mock.exe
-
-
-CompileDaemon --build="go build ./cmd/main_kbank_mock.go" --command=./main_kbank_mock.exe
+# mock ktb app
+CompileDaemon --build="go build ./cmd/kbank/kbank_mock.go" --command=./kbank_mock.exe
