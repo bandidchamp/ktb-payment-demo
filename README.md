@@ -1,5 +1,5 @@
 # ktb-payment-demo
 KBank payment gateway demo.
 
-# main app
-CompileDaemon --build="go build ./cmd/main.go" --command=./main.exe
+<h3># main app</h3>
+<p>CompileDaemon --build="go build ./cmd/main.go" --command=./main.exe</p>
